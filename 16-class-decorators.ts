@@ -1,17 +1,19 @@
-function WithFuel(target: typeof Rocket, context): typeof Rocket {
-  if (context.kind === "class") {
-    return class extends target {
-      fuel: number = 50
-      isEmpty(): boolean {
-        return this.fuel == 0
-      }
-    }
+function loggable (target :any){
+  console.log('Decorator class >> ' + target.name)
+}
+
+@loggable
+class Greeter {
+  greeting: string;
+  constructor(message: string) {
+    this.greeting = message;
+  }
+
+  greet() {
+    return "Hello, " + this.greeting;
   }
 }
 
-@WithFuel
-class Rocket {}
-
-const rocket = new Rocket()
-console.log((rocket as any).fuel)
-console.log(`Is the rocket empty? ${(rocket as any).isEmpty()}`)
+let greeter = new Greeter("Hello, world!");
+const greet = greeter.greet();
+console.log(greet)
